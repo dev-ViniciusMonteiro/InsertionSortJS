@@ -6,6 +6,7 @@
     <title>Document</title>
 
     <script>
+        var vetorDesordenado  = [500,400,300,600,700,80,9000];
         
             function insertion(vet,ini,fim) {//recebe o array , inicio e o fim
      for(var i = ini+1;i<fim;i++){//Varre o vetor da segunda posição em diante;
@@ -25,6 +26,24 @@ function troca(vet,ini,fim){
     vet[fim] = x
 }
 
+function insertionInverso(vet,ini,fim) {
+    for(var i = ini+1;i<fim;i++){
+       var posicao = i
+       while(posicao>0&&vet[posicao]>vet[posicao-1]){
+       troca(vet,posicao,posicao-1)
+       posicao--
+       }
+   }
+   return vet
+    
+}
+function trocai(vet,ini,fim){
+    const x = vet[ini]
+    const y = vet[fim]
+    vet[ini] = y
+    vet[fim] = x
+}
+
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -33,38 +52,96 @@ function getRandomIntInclusive(min, max) {
 
 
   //geral randomico alheatorio
-function geraAlheatorios(min,max,q){
-    var array = []
+function geraAlheatorios(array,min,max,q){
     for(i=0;i<q;i++){
         array.push(getRandomIntInclusive(min, max))
     }
     return array
 }
 
-function teste1(){
-    var vetorDesordenado  = [500,400,300,600,700,80,9000];
+
+/*function teste1(){
+    
 const vetorOrdenado = insertion(vetorDesordenado, 0, vetorDesordenado.length);//cria um novo array ordenado apartir do desordenado
 console.log(vetorOrdenado);
 }
 function teste2(){
     const vetorOrdenado2 = insertionInverso(vetorDesordenado, 0, vetorDesordenado.length);//array maior para menor apartir do desordenado
-console.log(vetorOrdenado);
+console.log(vetorOrdenado2);
 }
 function teste3(){
-    const arrayinsertion = insertion(geraAlheatorios(1,1000,1000000),0,1000000)//uniao de tudo ordenado menor para maior
+    const arrayinsertion = insertion(geraAlheatorios(1,1000,1000),0,1000)//uniao de tudo ordenado menor para maior
 console.log(arrayinsertion)
+}*/
+
+   
+
+
+var capturado = []
+function capturar(){
+    capturado.push(document.getElementById('valor').value)
+    document.getElementById('valorDigitado').innerHTML = "["+capturado+"]";
 }
 
-        
+function ordenar(){
+    const vetorOrdenadocapturado = insertion(capturado, 0, capturado.length);//cria um novo array ordenado apartir do desordenado
+    document.getElementById('valorDigitadoordenado').innerHTML = "Menor para maior:  ["+vetorOrdenadocapturado+"]"
+    const vetorOrdenadocapturado2 = insertionInverso(capturado, 0, capturado.length);//array maior para menor apartir do desordenado
+    document.getElementById('valorDigitadoordenadocontrario').innerHTML = "Maior para menor:  ["+vetorOrdenadocapturado2+"]"
+}
+
+function zerar(){
+    while(capturado.length){ capturado.pop()}
+}
+
+var quantosc = 0;
+var caparray = []
+function capturar2(){
+    while(caparray.length){ caparray.pop()}
+    caparray.shift(caparray.length)
+    quantosc=document.getElementById('valor2').value
+    geraAlheatorios(caparray,1,1000000,quantosc)
+    document.getElementById('valorDigitado2').innerHTML = "array criado:  "+caparray
+}
+function ordenar2(){
+    var caparrayordenado = insertion(caparray,0,caparray.length)
+    document.getElementById('valorDigitadoordenado2').innerHTML = "Menor para maior:  ["+caparrayordenado+"]"
+    var caparraycontrario = insertionInverso(caparray,0,caparray.length)
+    document.getElementById('valorcontrario2').innerHTML = "Maior para menor:  ["+caparraycontrario+"]"
+    
+    
+}
+
+
 
     </script>
 </head>
 <body>
-    <h1>Aperte F12 e olhe o console</h1>
-    <button onclick="teste1()">Ordencao criado array na mao</button>
-    <br>
-    <button onclick="teste2()">Ordencao ao contrario</button>
-    <br>
-    <button onclick="teste3()">Ordencao 1000000</button>
+    <h1>Ordenacao por insertionSort</h1>
+    <br><br><br><br>
+
+    <h3>Escreva um array numero por numero<Br>
+        (escrever dois numeros juntos gerara bug)
+    </h3>
+        <input type="text" id="valor">
+        <input type="submit" onclick="capturar()" value="escreva numeros">
+        <p id="valorDigitado"></p>
+        <br>
+        <input type="submit" onclick="ordenar()" value="ordenar">
+        <p id="valorDigitadoordenado"></p>
+        <p id="valorDigitadoordenadocontrario"></p>
+        <br>
+        <input type="submit" onclick="zerar()" value="zerar">
+
+        <br><br><br><br>
+        <h3>Excreva quantos numeros alheatorio que criar entre 1,1000000<br>
+            (caso queira gerar outros numeros basta colocar quantos e gerar novamente)
+        </h3>
+        <input type="text" id="valor2">
+        <input type="submit" onclick="capturar2()" value="escreva quantos">
+        <p id="valorDigitado2"></p>
+        <input type="submit" onclick="ordenar2()" value="ordenar">
+        <p id="valorDigitadoordenado2"></p>
+        <p id="valorcontrario2"></p>
 </body>
 </html>
